@@ -1,1 +1,276 @@
-index.html [generated with web_code_canvas tool]
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ဇေယျာချမ်းမြေ့ အလင်းရောင် စာကြည့်တိုက်</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #27ae60;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2.5rem 1rem;
+        }
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+        }
+        header p {
+            margin: 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .search-box {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .search-box input {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            transition: 0.3s;
+        }
+        .search-box input:focus {
+            border-color: var(--accent-color);
+        }
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        .cat-btn {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+        .cat-btn:hover, .cat-btn.active {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            align-items: stretch;
+        }
+        .book-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s;
+        }
+        .book-card:hover {
+            transform: translateY(-5px);
+        }
+        .book-content {
+            flex-grow: 1;
+        }
+        .book-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+        .book-author, .book-cat {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .download-btn {
+            display: block;
+            background-color: var(--accent-color);
+            color: white;
+            text-align: center;
+            padding: 10px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .download-btn:hover {
+            opacity: 0.9;
+        }
+        .request-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 4rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        }
+        .request-section h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        .request-form input, .request-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+        .request-form button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: #2c3e50;
+            color: white;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>📚 ဇေယျာချမ်းမြေ့ အလင်းရောင် စာကြည့်တိုက်</h1>
+        <p>လေ့လာလိုသူများအတွက် အသိပညာဗဟုသုတ စာအုပ်စုံလင်ရာ</p>
+    </header>
+
+    <div class="container">
+        <!-- Search Bar -->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="စာအုပ်အမည် သို့မဟုတ် စာရေးဆရာ အမည်ဖြင့် ရှာရန်..." onkeyup="searchBooks()">
+        </div>
+
+        <!-- Categories -->
+        <div class="categories">
+            <button class="cat-btn active" onclick="filterCategory('all', this)">အားလုံး</button>
+            <button class="cat-btn" onclick="filterCategory('edu', this)">ပညာရေးဆိုင်ရာ</button>
+            <button class="cat-btn" onclick="filterCategory('lit', this)">ဝတ္ထု၊ ရសစာပေ</button>
+            <button class="cat-btn" onclick="filterCategory('tech', this)">ကွန်ပျူတာ / အင်္ဂလိပ်စာ</button>
+        </div>
+
+        <!-- Book List -->
+        <div class="book-grid" id="bookGrid">
+            <!-- Book 1 -->
+            <div class="book-card" data-category="edu" data-keywords="သင်္ချာ အခြေခံ math basic">
+                <div class="book-content">
+                    <div class="book-title">အခြေခံသင်္ချာလက်စွဲ</div>
+                    <div class="book-author">စာရေးဆရာ - ဦးဘိုဘို</div>
+                    <div class="book-cat">ဘာသာရပ် - ပညာရေးဆိုင်ရာ</div>
+                </div>
+                <a href="#" class="download-btn" target="_blank">စာအုပ်ဖတ်ရန် / ဒေါင်းလုဒ်</a>
+            </div>
+
+            <!-- Book 2 -->
+            <div class="book-card" data-category="lit" data-keywords="မိုးသောက်ရောင်ခြည် ဝတ္ထု တို">
+                <div class="book-content">
+                    <div class="book-title">မိုးသောက်ရောင်ခြည် (ဝတ္ထုတိုများ)</div>
+                    <div class="book-author">စာရေးဆရာ - မောင်မောင်</div>
+                    <div class="book-cat">ဘာသာရပ် - ဝတ္ထု၊ ရសစာပေ</div>
+                </div>
+                <a href="#" class="download-btn" target="_blank">စာအုပ်ဖတ်ရန် / ဒေါင်းလုဒ်</a>
+            </div>
+
+            <!-- Book 3 -->
+            <div class="book-card" data-category="tech" data-keywords="ကွန်ပျူတာ အခြေခံ computer basic programming">
+                <div class="book-content">
+                    <div class="book-title">ကွန်ပျူတာအခြေခံပညာ လက်စွဲ</div>
+                    <div class="book-author">စာရေးဆရာ - ဂျွန်ဆင်</div>
+                    <div class="book-cat">ဘာသာရပ် - ကွန်ပျူတာ နည်းပညာ</div>
+                </div>
+                <a href="#" class="download-btn" target="_blank">စာအုပ်ဖတ်ရန် / ဒေါင်းလုဒ်</a>
+            </div>
+        </div>
+
+        <!-- Contact / Request Box -->
+        <div class="request-section">
+            <h3>ဖတ်ချင်သည့်စာအုပ် တောင်းဆိုရန်နှင့် အကြံပြုရန်</h3>
+            <form class="request-form" onsubmit="handleRequest(event)">
+                <input type="text" id="reqName" placeholder="သင့်နာမည်" required>
+                <input type="text" id="reqBook" placeholder="လိုချင်သော စာအုပ်အမည်နှင့် စာရေးဆရာ" required>
+                <textarea id="reqMsg" rows="3" placeholder="အခြားဖြည့်စွက်ချက်များ (သို့) အကြံပြုချက်"></textarea>
+                <button type="submit">တောင်းဆိုချက် ပို့မည်</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 ဇေယျာချမ်းမြေ့ အလင်းရောင် စာကြည့်တိုက် | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        function searchBooks() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('book-card');
+            
+            for (let i = 0; i < cards.length; i++) {
+                let title = cards[i].querySelector('.book-title').innerText.toLowerCase();
+                let author = cards[i].querySelector('.book-author').innerText.toLowerCase();
+                let keywords = cards[i].getAttribute('data-keywords').toLowerCase();
+                
+                if (title.includes(input) || author.includes(input) || keywords.includes(input)) {
+                    cards[i].style.display = "flex";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+
+        function filterCategory(category, btn) {
+            let cards = document.getElementsByClassName('book-card');
+            let buttons = document.getElementsByClassName('cat-btn');
+            
+            for(let b of buttons) {
+                b.classList.remove('active');
+            }
+            btn.classList.add('active');
+
+            for (let i = 0; i < cards.length; i++) {
+                let cardCat = cards[i].getAttribute('data-category');
+                if (category === 'all' || cardCat === category) {
+                    cards[i].style.display = "flex";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+
+        function handleRequest(event) {
+            event.preventDefault();
+            alert('ကျေးဇူးတင်ပါသည်။ သင့်တောင်းဆိုချက်ကို လက်ခံရရှိပါပြီ။ မကြာမီ စာအုပ်ထည့်သွင်းပေးပါမည်။');
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>
